@@ -1,0 +1,46 @@
+Package: xpose.nlmixr
+Type: Package
+Title: Graphical Diagnostics for Pharmacometric Models: Extension to nlmixr
+Version: 0.1.0
+Authors@R: c(person('Justin', 'Wilkins', email = 'justin.wilkins@occams.com',
+                  role = c('aut', 'cre', 'cph')),
+          person('Matthew','Fidler',
+      role = c('aut','cph'), email = 'matthew.fidler@gmail.com'),  
+            person('Benjamin', 'Guiastrennec',
+             role = c('aut'),
+             email = 'guiastrennec@gmail.com'),
+      person('Andrew C.', 'Hooker', 
+             role = c('aut'),
+             email = 'andrew.hooker@farmbio.uu.se'),
+      person('Anna', 'Olofsson', role = c('aut', 'cph')),
+      person('Sebastian', 'Ueckert',
+             role = c('aut'),
+             email = 'sebastian.ueckert@farmbio.uu.se'),
+      person('Ron', 'Keizer', 
+             role = 'aut',
+             email = 'ronkeizer@gmail.com'),
+      person('Kajsa', 'Harling', role = 'ctb'),
+      person('Mike K.', 'Smith', role = 'ctb'),
+      person('Elodie', 'Plan', role = 'ctb'),
+      person('Mats O.', 'Karlsson',
+             role = c('aut', 'cph'),
+             email = 'mats.karlsson@farmbio.uu.se'),
+      person('Pharmetheus', role = 'ctb'),
+      person('Pfizer', role = 'ctb'),
+      person('Occams', role = 'ctb'),
+      person('Novartis', role = 'ctb'))
+Maintainer: Justin Wilkins <justin.wilkins@occams.com>
+Description: xpose support for nlmixr.
+License: GPL (>=2)
+Encoding: UTF-8
+LazyData: true
+Depends:
+  R (>= 3.2),
+  ggplot2 (>= 2.2.1),
+  xpose (>= 0.2.1),
+  nlmixr (>= 0.9.0-2),
+  dplyr (>= 0.7.4),
+  tidyr (>= 0.7.2),
+  tibble (>= 1.3.4),
+  stringr (>= 1.2.0)
+RoxygenNote: 6.0.1

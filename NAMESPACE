@@ -1,0 +1,11 @@
+#exportPattern("^[[:alpha:]]+")
+export(xpose_data_nlmixr)
+import(xpose)
+import(ggplot2)
+import(nlmixr)
+import(dplyr)
+import(stringr)
+import(tibble)
+import(tidyr)
+
+
