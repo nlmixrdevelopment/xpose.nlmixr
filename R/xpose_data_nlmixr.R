@@ -150,7 +150,7 @@ xpose_data_nlmixr <- function(obj         = NULL,
   attr(xp_theme, 'theme') <- as.character(substitute(xp_theme))
 
   # Output xpose_data
-  list(code = NULL, summary = summary, data = data,
+  list(code = obj$uif, summary = summary, data = data,
        files = files, gg_theme = gg_theme, xp_theme = xp_theme,
        options = list(dir = NULL, quiet = quiet,
                       manual_import = NULL), software = 'nlmixr') %>%
