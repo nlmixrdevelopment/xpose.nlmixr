@@ -98,8 +98,8 @@ xpose_data_nlmixr <- function(obj         = NULL,
       .$col == 'MDV' ~ 'mdv',
       .$col == 'EVID' ~ 'evid',
       .$col == 'IPRED' ~ 'ipred',
-      .$col == 'PRED' ~ 'pred',
-      .$col %in% c('RES', 'WRES', 'CWRES', 'IWRES', 'EWRES', 'NPDE','IRES') ~ 'res',
+      .$col %in% c('PRED', 'CPRED') ~ 'pred',
+      .$col %in% c('RES', 'WRES', 'CWRES', 'IWRES', 'EWRES', 'NPDE','IRES','CRES') ~ 'res',
       stringr::str_detect(.$col, 'ETA\\d+|ET\\d+|eta.*') ~ 'eta'))
 
   data <- list()
