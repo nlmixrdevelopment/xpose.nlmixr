@@ -1,6 +1,6 @@
 Package: xpose.nlmixr
 Type: Package
-Title: Graphical Diagnostics for Pharmacometric Models: Extension to nlmixr
+Title: Graphical Diagnostics for Pharmacometric Models: Extension to 'nlmixr'
 Version: 0.1.0
 Authors@R: c(person('Justin', 'Wilkins', email = 'justin.wilkins@occams.com',
                   role = c('aut', 'cre', 'cph')),
@@ -30,14 +30,14 @@ Authors@R: c(person('Justin', 'Wilkins', email = 'justin.wilkins@occams.com',
       person('Occams', role = 'ctb'),
       person('Novartis', role = 'ctb'))
 Maintainer: Justin Wilkins <justin.wilkins@occams.com>
-Description: xpose support for nlmixr.
+Description: 'xpose' support for 'nlmixr'.
 License: GPL (>=2)
 Encoding: UTF-8
 LazyData: true
 Depends:
   R (>= 3.2),
   ggplot2 (>= 2.2.1),
-  xpose (>= 0.2.1),
+  xpose (>= 0.4.2),
   nlmixr (>= 0.9.0-2),
   dplyr (>= 0.7.4),
   tidyr (>= 0.7.2),

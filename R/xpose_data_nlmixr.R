@@ -3,6 +3,8 @@
 #' @description Convert nlmixr model output into an xpose database
 #'
 #' @param obj nlmixr fit object to be evaluated.
+#' @param pred Name of the population prediction variable to use for plotting. Default is \code{"CPRED"}.
+#' @param wres Name of the weighted residual variable to use for plotting. Default is \code{"CWRES"}.
 #' @param gg_theme A ggplot2 theme object (eg. \code{\link[ggplot2]{theme_classic}}).
 #' @param xp_theme An xpose theme or vector of modifications to the xpose theme
 #' (eg. \code{c(point_color = 'red', line_linetype = 'dashed')}).
@@ -19,6 +21,8 @@
 #' @export
 
 xpose_data_nlmixr <- function(obj         = NULL,
+                              pred        = "CPRED",
+                              wres        = "CWRES",
                               gg_theme    = theme_readable(),
                               xp_theme    = theme_xp_default(),
                               quiet,
@@ -80,6 +84,16 @@ xpose_data_nlmixr <- function(obj         = NULL,
     data_a <- tibble::as.tibble(data_a)
   }
 
+  if(!(wres %in% names(data_a))) {
+    stop(paste(wres, ' not found in nlmixr fit object.', sep=""), call. = FALSE)
+  }
+
+  if(!(pred %in% names(data_a))) {
+    stop(paste(pred, ' not found in nlmixr fit object.', sep=""), call. = FALSE)
+  }
+
+  data_a <- merge(data_a, get(obj$data.name))
+
   data <- NULL
   data_ind <- data_a %>%
     colnames() %>%
@@ -98,9 +112,14 @@ xpose_data_nlmixr <- function(obj         = NULL,
       .$col == 'MDV' ~ 'mdv',
       .$col == 'EVID' ~ 'evid',
       .$col == 'IPRED' ~ 'ipred',
-      .$col %in% c('PRED', 'CPRED') ~ 'pred',
+      .$col == pred ~ 'pred',
       .$col %in% c('RES', 'WRES', 'CWRES', 'IWRES', 'EWRES', 'NPDE','IRES','CRES') ~ 'res',
+      .$col %in% c('WT','AGE','HT','BMI','LBM') ~ 'contcov',
+      .$col %in% c('SEX','RACE') ~ 'catcov',
+      .$col %in% c('CL','V','V1','V2','V3','Q','Q2','Q3','KA','K12','K21','K','K13','K31','K23','K32','K24','K42','K34','K43') ~ 'param',
       stringr::str_detect(.$col, 'ETA\\d+|ET\\d+|eta.*') ~ 'eta'))
+
+  data_ind$type[is.na(data_ind$type)] <- 'na'
 
   data <- list()
   data <- dplyr::tibble(problem = 1,

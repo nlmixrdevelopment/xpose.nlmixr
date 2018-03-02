@@ -4,11 +4,16 @@
 \alias{xpose_data_nlmixr}
 \title{Import nlmixr output into R}
 \usage{
-xpose_data_nlmixr(obj = NULL, gg_theme = theme_readable(),
-  xp_theme = theme_xp_default(), quiet, skip = NULL, ...)
+xpose_data_nlmixr(obj = NULL, pred = "CPRED", wres = "CWRES",
+  gg_theme = theme_readable(), xp_theme = theme_xp_default(), quiet,
+  skip = NULL, ...)
 }
 \arguments{
 \item{obj}{nlmixr fit object to be evaluated.}
+
+\item{pred}{Name of the population prediction variable to use for plotting. Default is \code{"CPRED"}.}
+
+\item{wres}{Name of the weighted residual variable to use for plotting. Default is \code{"CWRES"}.}
 
 \item{gg_theme}{A ggplot2 theme object (eg. \code{\link[ggplot2]{theme_classic}}).}
 
