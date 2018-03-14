@@ -28,7 +28,7 @@ combination of the three.}
 \item{...}{Additional arguments to be passed to the \code{\link[readr]{read_delim}} functions.}
 }
 \description{
-Convert nlmixr model output into an xpose database
+Convert 'nlmixr' model output into an 'xpose' database
 }
 \examples{
 \dontrun{

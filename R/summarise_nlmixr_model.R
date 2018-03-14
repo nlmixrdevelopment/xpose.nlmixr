@@ -1,3 +1,22 @@
+#' Data summary function
+#'
+#' @description Convert 'nlmixr' model output into an 'xpose' database
+#'
+#' @param obj nlmixr fit object to be evaluated
+#' @param model Model. Can be blank
+#' @param software Software that generated the model fit
+#' @param rounding Number of figures to round estimates to
+#' @param runname Name of the model object being converted
+#'
+#' @importFrom magrittr %>%
+#' @importFrom dplyr bind_rows filter mutate arrange_ case_when select one_of tibble
+#' @importFrom tidyr complete_
+#'
+#' @examples
+#' \dontrun{
+#' xpdb <- xpose_data_nlmixr(obj = fit1)
+#' }
+
 summarise_nlmixr_model <- function(obj, model, software, rounding, runname) {
   sum <- dplyr::bind_rows(
     sum_nlmixr_software(software),                    # Software name
@@ -31,6 +50,8 @@ summarise_nlmixr_model <- function(obj, model, software, rounding, runname) {
     sum_nlmixr_shk(model, software, 'eps', obj, rounding), # Epsilon shrinkage
     sum_nlmixr_shk(model, software, 'eta', obj, rounding)  # Eta shrinkage
   )
+
+  . = NULL
 
   # Complete missing cases for consistency
   tmp <- sum %>%

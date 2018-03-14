@@ -1,6 +1,6 @@
 #' Import nlmixr output into R
 #'
-#' @description Convert nlmixr model output into an xpose database
+#' @description Convert 'nlmixr' model output into an 'xpose' database
 #'
 #' @param obj nlmixr fit object to be evaluated.
 #' @param pred Name of the population prediction variable to use for plotting. Default is \code{"CPRED"}.
@@ -12,6 +12,11 @@
 #' @param skip Character vector be used to skip the import/generation of: 'data', 'files', 'summary' or any
 #' combination of the three.
 #' @param ... Additional arguments to be passed to the \code{\link[readr]{read_delim}} functions.
+#'
+#' @importFrom dplyr group_by mutate tibble case_when
+#' @importFrom tibble as.tibble
+#' @importFrom stringr str_detect
+#' @importFrom xpose theme_readable theme_xp_default
 #'
 #' @examples
 #' \dontrun{
@@ -29,6 +34,13 @@ xpose_data_nlmixr <- function(obj         = NULL,
                               skip        = NULL,
                               ...) {
 
+
+  . = NULL
+  ID = NULL
+  RES = NULL
+  DV = NULL
+  PRED = NULL
+  msg = NULL
 
   get_wres <- function(res, dv, pred) {
     res / (sqrt(stats::cov(dv, pred)))

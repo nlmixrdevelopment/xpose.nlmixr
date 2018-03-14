@@ -30,17 +30,19 @@ Authors@R: c(person('Justin', 'Wilkins', email = 'justin.wilkins@occams.com',
       person('Occams', role = 'ctb'),
       person('Novartis', role = 'ctb'))
 Maintainer: Justin Wilkins <justin.wilkins@occams.com>
-Description: 'xpose' support for 'nlmixr'.
+Description: Extension to 'xpose' to support 'nlmixr'.
 License: GPL (>=2)
 Encoding: UTF-8
 LazyData: true
 Depends:
-  R (>= 3.2),
+  R (>= 3.2)
+Imports:
   ggplot2 (>= 2.2.1),
   xpose (>= 0.4.2),
   nlmixr (>= 0.9.0-2),
   dplyr (>= 0.7.4),
-  tidyr (>= 0.7.2),
   tibble (>= 1.3.4),
-  stringr (>= 1.2.0)
+  stringr (>= 1.2.0),
+  tidyr (>= 0.7.2),
+  magrittr (>= 1.5)
 RoxygenNote: 6.0.1
