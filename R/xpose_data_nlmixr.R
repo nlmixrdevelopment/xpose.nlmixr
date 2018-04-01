@@ -43,7 +43,7 @@ xpose_data_nlmixr <- function(obj         = NULL,
   msg = NULL
 
   get_wres <- function(res, dv, pred) {
-    res / (sqrt(stats::cov(dv, pred)))
+    suppressWarnings(res / (sqrt(stats::cov(dv, pred))))
   }
 
   if (is.null(obj)) {
@@ -58,6 +58,8 @@ xpose_data_nlmixr <- function(obj         = NULL,
   if (("nlmixr_nlme" %in% class(obj)) | ("nlmixr.ui.nlme" %in% class(obj))) {
     mtype <- "nlme"
     software <- "nlmixr"
+    wres <- "WRES"
+    pred <- "PRED"
     objok <- TRUE
   }
 
@@ -67,7 +69,8 @@ xpose_data_nlmixr <- function(obj         = NULL,
     objok <- TRUE
   }
 
-  if ((objok == FALSE) | ("nlmixr_nlme" %in% class(obj))) {
+  #if ((objok == FALSE) | ("nlmixr_nlme" %in% class(obj))) {
+  if ((objok == FALSE)) {
     stop('Model type currently not supported by xpose.', call. = FALSE)
   }
 
@@ -80,6 +83,17 @@ xpose_data_nlmixr <- function(obj         = NULL,
     data$IPRED <- obj$fitted[,2]
     data$RES   <- obj$residuals[,1]
     data$IRES  <- obj$residuals[,2]
+
+    pars <- as.data.frame(coef(obj))
+    pars$ID <- row.names(as.data.frame(coef(obj)))
+
+    etas <- as.data.frame(obj$coefficients$random$ID)
+    names(etas) <- paste("eta.", names(etas), sep="")
+    etas$ID <- row.names(as.data.frame(obj$coefficients$random$ID))
+
+    data$ID <- as.character(data$ID)
+    data <- suppressMessages(dplyr::inner_join(data, pars))
+    data <- suppressMessages(dplyr::inner_join(data, etas))
 
     data_a <- data %>%
       dplyr::group_by(ID) %>%
@@ -104,7 +118,9 @@ xpose_data_nlmixr <- function(obj         = NULL,
     stop(paste(pred, ' not found in nlmixr fit object.', sep=""), call. = FALSE)
   }
 
-  data_a <- merge(data_a, get(obj$data.name))
+  if (("nlmixr.ui.saem" %in% class(obj)) | ("nlmixr.ui.nlme" %in% class(obj))) {
+    data_a <- merge(data_a, get(obj$data.name))
+  }
 
   data <- NULL
   data_ind <- data_a %>%
@@ -128,7 +144,9 @@ xpose_data_nlmixr <- function(obj         = NULL,
       .$col %in% c('RES', 'WRES', 'CWRES', 'IWRES', 'EWRES', 'NPDE','IRES','CRES') ~ 'res',
       .$col %in% c('WT','AGE','HT','BMI','LBM') ~ 'contcov',
       .$col %in% c('SEX','RACE') ~ 'catcov',
-      .$col %in% c('CL','V','V1','V2','V3','Q','Q2','Q3','KA','K12','K21','K','K13','K31','K23','K32','K24','K42','K34','K43') ~ 'param',
+      .$col %in% c('CL','V','V1','V2','V3','Q','Q2','Q3','KA','K12','K21','K','K13','K31','K23','K32','K24','K42','K34','K43',
+                   'cl','v','v1','v2','v3','q','q2','q3','ka','k12','k21','k','k13','k31','k23','k32','k24','k42','k34','k43',
+                   'tcl','tv','tv1','tv2','tv3','tq','tq2','tq3','tka','tk12','tk21','tk','tk13','tk31','tk23','tk32','tk24','tk42','tk34','tk43') ~ 'param',
       stringr::str_detect(.$col, 'ETA\\d+|ET\\d+|eta.*') ~ 'eta'))
 
   data_ind$type[is.na(data_ind$type)] <- 'na'

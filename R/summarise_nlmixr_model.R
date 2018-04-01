@@ -126,7 +126,11 @@ sum_nlmixr_file <- function(runname, software) {
 # Model run name
 sum_nlmixr_run <- function(obj, runname, software) {
   if (software == 'nlmixr') {
-    dplyr::tibble(problem = 1, subprob = 0, label = 'run', value = obj$model.name)
+    if(!is.null(obj$model.name)) {
+      dplyr::tibble(problem = 1, subprob = 0, label = 'run', value = obj$model.name)
+    } else {
+      dplyr::tibble(problem = 1, subprob = 0, label = 'run', value = runname)
+    }
   }
 }
 
@@ -182,7 +186,11 @@ sum_nlmixr_description <- function(model, software) {
 # Input data
 sum_nlmixr_input_data <- function(obj, model, software) {
   if (software == 'nlmixr') {
+    if(!is.null(obj$data.name)) {
     dplyr::tibble(problem = 1, subprob = 0, label = 'data', value = obj$data.name)
+    } else {
+      sum_tpl('data', 'not available')
+    }
   }
 }
 
@@ -237,17 +245,24 @@ sum_nlmixr_runtime <- function(model, software, obj, rounding) {
     if ("nlmixr.ui.nlme" %in% class(obj)) {
       rt <- obj$time$nlme
     }
-    dplyr::tibble(problem = 1, subprob = 0, label = 'runtime', value = as.character(round(rt, rounding)))
+    if (rt!='na') {
+      dplyr::tibble(problem = 1, subprob = 0, label = 'runtime', value = as.character(round(rt, rounding)))
+    } else {
+      dplyr::tibble(problem = 1, subprob = 0, label = 'runtime', value = 'not available')
+    }
   }
 }
 
 # Covariance matrix runtime
 sum_nlmixr_covtime <- function(model, software, obj, rounding) {
   if (software == 'nlmixr') {
-    rt <- 'na'
-    ## Shouldn't change between methods
+
     rt <- obj$time$covariance
-    dplyr::tibble(problem = 1, subprob = 0, label = 'covtime', value = as.character(round(rt, rounding)))
+    if (!is.null(rt)) {
+      dplyr::tibble(problem = 1, subprob = 0, label = 'covtime', value = as.character(round(rt, rounding)))
+    } else {
+      dplyr::tibble(problem = 1, subprob = 0, label = 'covtime', value = 'not available')
+    }
   }
 }
 
@@ -304,40 +319,52 @@ sum_nlmixr_esampleseed <- function(model, software) {
 # Objective function value
 sum_nlmixr_ofv <- function(model, software, obj, rounding) {
   if (software == 'nlmixr') {
-    ofv <- 'na'
-    ofv <- obj$objective ## Shouldn't change; OFV can be different for nlme. $objective = FOCEi objective.
-    dplyr::tibble(problem = 1, subprob = 0, label = 'ofv', value = as.character(round(ofv, digits=rounding)))
+    ofv <- obj$objective
+    if(!is.null(ofv)) {
+      dplyr::tibble(problem = 1, subprob = 0, label = 'ofv', value = as.character(round(ofv, digits=rounding)))
+    } else {
+      dplyr::tibble(problem = 1, subprob = 0, label = 'ofv', value = 'not available')
+    }
   }
 }
 
 # Estimation method or sim
 sum_nlmixr_method <- function(model, software, obj) {
   if (software == 'nlmixr') {
+    if ("nlmixr_nlme" %in% class(obj)) {
+      dplyr::tibble(problem = 1, subprob = 0, label = 'method', value = 'nlme')
+    } else {
      dplyr::tibble(problem = 1, subprob = 0, label = 'method', value = obj$est)
+    }
   }
 }
 
 # Epsilon/Eta shrinkage
 sum_nlmixr_shk <- function(model, software, type, obj, rounding) {
   if (software == 'nlmixr') {
-    shk <- 'na'
-    lab <- paste(type, 'shk', sep='')
-    if (("nlmixr.ui.saem" %in% class(obj)) | ("nlmixr.ui.nlme" %in% class(obj))) {
-      if(type=="eps") {
-        shk <- paste(round((1 - stats::sd(obj$IWRES))*100, digits = rounding), "[1]", sep=" ")
-      }
-      if(type=="eta") {
-        omega <- diag(obj$omega)
-        d <- as.data.frame(obj[!duplicated(obj$ID),])
-        d <- d[,names(d) %in% names(omega)]
-        eshr <- c()
-        for (i in 1:length(omega)) {
-          shr <- (1 - (stats::sd(d[,i]) / sqrt(omega[i])))*100
-          eshr <- c(eshr, round(shr, 3))
+    if ("nlmixr_nlme" %in% class(obj)) {
+      lab <- paste(type, 'shk', sep='')
+      dplyr::tibble(problem = 1, subprob = 0, label = lab, value = 'not implemented')
+    } else {
+      shk <- 'na'
+      lab <- paste(type, 'shk', sep='')
+      if (("nlmixr.ui.saem" %in% class(obj)) | ("nlmixr.ui.nlme" %in% class(obj))) {
+        if(type=="eps") {
+          shk <- paste(round((1 - stats::sd(obj$IWRES))*100, digits = rounding), "[1]", sep=" ")
         }
-        shk <- paste(paste(round(eshr, digits = rounding), ' [', 1:length(eshr), ']', sep=''), collapse=', ')
+        if(type=="eta") {
+          omega <- diag(obj$omega)
+          d <- as.data.frame(obj[!duplicated(obj$ID),])
+          d <- d[,names(d) %in% names(omega)]
+          eshr <- c()
+          for (i in 1:length(omega)) {
+            shr <- (1 - (stats::sd(d[,i]) / sqrt(omega[i])))*100
+            eshr <- c(eshr, round(shr, 3))
+          }
+          shk <- paste(paste(round(eshr, digits = rounding), ' [', 1:length(eshr), ']', sep=''), collapse=', ')
+        }
       }
+      dplyr::tibble(problem = 1, subprob = 0, label = lab, value = shk)
     }
-    dplyr::tibble(problem = 1, subprob = 0, label = lab, value = shk)
   }
 }
