@@ -333,9 +333,9 @@ sum_nlmixr_method <- function(model, software, obj) {
   if (software == 'nlmixr') {
     if ("nlmixr_nlme" %in% class(obj)) {
       dplyr::tibble(problem = 1, subprob = 0, label = 'method', value = 'nlme')
-    } else if (is(obj, "nlmixr.ui.saem")){
+    } else if (methods::is(obj, "nlmixr.ui.saem")){
         dplyr::tibble(problem = 1, subprob = 0, label = 'method', value = 'saem')
-    } else if (is(obj, "focei.fit")){
+    } else if (methods::is(obj, "focei.fit")){
         dplyr::tibble(problem = 1, subprob = 0, label = 'method', value = 'focei')
     }
   }

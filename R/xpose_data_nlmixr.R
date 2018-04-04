@@ -17,6 +17,7 @@
 #' @importFrom tibble as.tibble
 #' @importFrom stringr str_detect
 #' @importFrom xpose theme_readable theme_xp_default
+#' @importFrom stats coef rnorm
 #'
 #' @examples
 #' \dontrun{
@@ -84,8 +85,8 @@ xpose_data_nlmixr <- function(obj         = NULL,
     data$RES   <- obj$residuals[,1]
     data$IRES  <- obj$residuals[,2]
 
-    pars <- as.data.frame(coef(obj))
-    pars$ID <- row.names(as.data.frame(coef(obj)))
+    pars <- as.data.frame(stats::coef(obj))
+    pars$ID <- row.names(as.data.frame(stats::coef(obj)))
 
     etas <- as.data.frame(obj$coefficients$random$ID)
     names(etas) <- paste("eta.", names(etas), sep="")
