@@ -5,7 +5,7 @@
 #' @param obj nlmixr fit object to be evaluated.
 #' @param pred Name of the population prediction variable to use for plotting. Default is \code{"CPRED"}.
 #' @param wres Name of the weighted residual variable to use for plotting. Default is \code{"CWRES"}.
-#' @param gg_theme A ggplot2 theme object (eg. \code{\link[ggplot2]{theme_classic}}).
+#' @param gg_theme A ggplot2 theme object.
 #' @param xp_theme An xpose theme or vector of modifications to the xpose theme
 #' (eg. \code{c(point_color = 'red', line_linetype = 'dashed')}).
 #' @param quiet Logical, if \code{FALSE} messages are printed to the console.

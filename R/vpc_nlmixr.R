@@ -73,6 +73,12 @@ vpc_nlmixr = function(obj, dat, nsim = 400, by=NULL, ...) {
   vpc::vpc(sim = df, obs = dat, ...)
 }
 
+#' Default VPC theme for 'xpose.nlmixr'
+#'
+#' @description Default VPC theme for 'xpose.nlmixr'
+#'
+#' @export
+
 nlmixr_vpc_theme <- vpc::new_vpc_theme(list(obs_color = "#1F4E79",
                                             obs_size = 1,
                                             obs_median_color = "#1F4E79",
