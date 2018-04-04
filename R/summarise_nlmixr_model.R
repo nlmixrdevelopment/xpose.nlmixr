@@ -187,7 +187,7 @@ sum_nlmixr_description <- function(model, software) {
 sum_nlmixr_input_data <- function(obj, model, software) {
   if (software == 'nlmixr') {
     if(!is.null(obj$data.name)) {
-    dplyr::tibble(problem = 1, subprob = 0, label = 'data', value = obj$data.name)
+        dplyr::tibble(problem = 1, subprob = 0, label = 'data', value = obj$data.name)
     } else {
       sum_tpl('data', 'not available')
     }
@@ -333,8 +333,10 @@ sum_nlmixr_method <- function(model, software, obj) {
   if (software == 'nlmixr') {
     if ("nlmixr_nlme" %in% class(obj)) {
       dplyr::tibble(problem = 1, subprob = 0, label = 'method', value = 'nlme')
-    } else {
-     dplyr::tibble(problem = 1, subprob = 0, label = 'method', value = obj$est)
+    } else if (is(obj, "nlmixr.ui.saem")){
+        dplyr::tibble(problem = 1, subprob = 0, label = 'method', value = 'saem')
+    } else if (is(obj, "focei.fit")){
+        dplyr::tibble(problem = 1, subprob = 0, label = 'method', value = 'focei')
     }
   }
 }

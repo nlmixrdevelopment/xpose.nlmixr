@@ -118,7 +118,7 @@ xpose_data_nlmixr <- function(obj         = NULL,
     stop(paste(pred, ' not found in nlmixr fit object.', sep=""), call. = FALSE)
   }
 
-  if (("nlmixr.ui.saem" %in% class(obj)) | ("nlmixr.ui.nlme" %in% class(obj))) {
+  if (!is.null(obj$data.name) & (("nlmixr.ui.saem" %in% class(obj)) | ("nlmixr.ui.nlme" %in% class(obj)))) {
     data_a <- merge(data_a, get(obj$data.name))
   }
 
