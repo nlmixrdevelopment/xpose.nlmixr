@@ -122,6 +122,14 @@ xpose_data_nlmixr <- function(obj         = NULL,
     data_a <- merge(data_a, get(obj$data.name))
   }
 
+  # check for ETAs
+  # if(!any(stringr::str_detect(names(data_a), 'ETA\\d+|ET\\d+|eta.*'))) {
+  #   data_a <- merge(data_a, obj$eta)
+  # }
+  if(!all(names(diag(obj$omega)) %in% names(data_a))) {
+    data_a <- merge(data_a, obj$eta)
+  }
+
   data <- NULL
   data_ind <- data_a %>%
     colnames() %>%

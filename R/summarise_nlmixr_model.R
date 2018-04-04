@@ -355,6 +355,12 @@ sum_nlmixr_shk <- function(model, software, type, obj, rounding) {
         if(type=="eta") {
           omega <- diag(obj$omega)
           d <- as.data.frame(obj[!duplicated(obj$ID),])
+
+          ## add ETA if missing
+          if(!all(names(omega) %in% names(d))) {
+            d <- merge(d, obj$eta)
+          }
+
           d <- d[,names(d) %in% names(omega)]
           eshr <- c()
           for (i in 1:length(omega)) {
