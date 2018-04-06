@@ -15,7 +15,7 @@ xpose_data_nlmixr(obj = NULL, pred = "CPRED", wres = "CWRES",
 
 \item{wres}{Name of the weighted residual variable to use for plotting. Default is \code{"CWRES"}.}
 
-\item{gg_theme}{A ggplot2 theme object (eg. \code{\link[ggplot2]{theme_classic}}).}
+\item{gg_theme}{A ggplot2 theme object.}
 
 \item{xp_theme}{An xpose theme or vector of modifications to the xpose theme
 (eg. \code{c(point_color = 'red', line_linetype = 'dashed')}).}

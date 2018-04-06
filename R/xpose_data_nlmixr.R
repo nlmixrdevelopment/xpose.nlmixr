@@ -13,6 +13,7 @@
 #' combination of the three.
 #' @param ... Additional arguments to be passed to the \code{\link[readr]{read_delim}} functions.
 #'
+#' @import xpose
 #' @importFrom dplyr group_by mutate tibble case_when
 #' @importFrom tibble as.tibble
 #' @importFrom stringr str_detect
