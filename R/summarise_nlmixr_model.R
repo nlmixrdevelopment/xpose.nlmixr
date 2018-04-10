@@ -363,7 +363,14 @@ sum_nlmixr_shk <- function(model, software, type, obj, rounding) {
             d <- merge(d, obj$eta)
           }
 
-          d <- d[,names(d) %in% names(omega)]
+          ## account for 1-eta systems
+          if(length(names(omega)) == 1) {
+            d <- data.frame(eta = d[,names(d) %in% names(omega)])
+            names(d) <- names(omega)
+          } else {
+            d <- d[,names(d) %in% names(omega)]
+          }
+
           eshr <- c()
           for (i in 1:length(omega)) {
             shr <- (1 - (stats::sd(d[,i]) / sqrt(omega[i])))*100
