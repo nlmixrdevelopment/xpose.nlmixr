@@ -122,7 +122,9 @@ xpose_data_nlmixr <- function(obj         = NULL,
 
   if (!is.null(obj$data.name) & (("nlmixr.ui.saem" %in% class(obj)) | ("nlmixr.ui.nlme" %in% class(obj)))) {
       ## getData works for nlme/saem;  It also works if you remove the data or use nlmixr's read data set
-      data_a <- merge(data_a, nlme::getData(obj))
+      full.dat <- suppressWarnings({nlmixr::nlmixrData(nlme::getData(obj))})
+      full.dat <- full.dat[full.dat$EVID == 0, !(names(full.dat) %in% names(data_a))];
+      data_a <- data.frame(data_a, full.dat);
   }
 
   # check for ETAs
