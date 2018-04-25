@@ -46,6 +46,6 @@ Imports:
   tidyr (>= 0.7.2),
   magrittr (>= 1.5),
   methods (>= 3.4.1),
-  vpc (>= 1.0.1),
+  vpc (>= 1.0.2),
   nlme
 RoxygenNote: 6.0.1
