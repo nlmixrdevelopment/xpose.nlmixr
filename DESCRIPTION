@@ -1,7 +1,7 @@
 Package: xpose.nlmixr
 Type: Package
 Title: Graphical Diagnostics for Pharmacometric Models: Extension to 'nlmixr'
-Version: 0.1.1
+Version: 0.1.2
 Authors@R: c(person('Justin', 'Wilkins', email = 'justin.wilkins@occams.com',
                   role = c('aut', 'cre', 'cph')),
           person('Matthew','Fidler',
@@ -46,5 +46,5 @@ Imports:
   tidyr (>= 0.7.2),
   magrittr (>= 1.5),
   methods (>= 3.4.1),
-  vpc (>= 1.0.1)
+  vpc (>= 1.0.2)
 RoxygenNote: 6.0.1
