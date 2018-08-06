@@ -57,19 +57,25 @@ xpose_data_nlmixr <- function(obj         = NULL,
 
   objok <- FALSE
 
-  if (("nlmixr_nlme" %in% class(obj)) | ("nlmixr.ui.nlme" %in% class(obj))) {
-    mtype <- "nlme"
+  if (any("nlmixrFitData" == class(obj))) {
+    mtype <- fit$env$est
     software <- "nlmixr"
-    wres <- "WRES"
-    pred <- "PRED"
+    if (mtype == "nlme"){
+        wres <- "WRES"
+        pred <- "PRED"
+    }
+    objok <- TRUE
+  } else if (any("nlmixr_nlme" == class(obj))) {
+    mtype <- downcase(fit$env$est)
+    software <- "nlmixr"
+    if (mtype == "nlme"){
+        wres <- "WRES"
+        pred <- "PRED"
+    }
     objok <- TRUE
   }
 
-  if ("nlmixr.ui.saem" %in% class(obj)) {
-    mtype <- "saem"
-    software <- "nlmixr"
-    objok <- TRUE
-  }
+
 
   #if ((objok == FALSE) | ("nlmixr_nlme" %in% class(obj))) {
   if ((objok == FALSE)) {
@@ -104,7 +110,7 @@ xpose_data_nlmixr <- function(obj         = NULL,
     data_a <- tibble::as.tibble(data_a)
   }
 
-  if (("nlmixr.ui.saem" %in% class(obj)) | ("nlmixr.ui.nlme" %in% class(obj))) {
+  if (any("nlmixrFitData" == class(obj))) {
     data <- as.data.frame(obj)
     data_a <- data %>%
       dplyr::group_by(ID)
@@ -120,7 +126,7 @@ xpose_data_nlmixr <- function(obj         = NULL,
     stop(paste(pred, ' not found in nlmixr fit object.', sep=""), call. = FALSE)
   }
 
-  if (!is.null(obj$data.name) & (("nlmixr.ui.saem" %in% class(obj)) | ("nlmixr.ui.nlme" %in% class(obj)))) {
+  if (!is.null(obj$data.name) & any("nlmixrFitData" == class(obj))) {
       ## getData works for nlme/saem;  It also works if you remove the data or use nlmixr's read data set
       full.dat <- suppressWarnings({nlmixr::nlmixrData(nlme::getData(obj))})
       full.dat <- full.dat[full.dat$EVID == 0, !(names(full.dat) %in% names(data_a))];
