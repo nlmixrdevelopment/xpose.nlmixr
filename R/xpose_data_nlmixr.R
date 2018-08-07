@@ -66,7 +66,7 @@ xpose_data_nlmixr <- function(obj         = NULL,
     }
     objok <- TRUE
   } else if (any("nlmixr_nlme" == class(obj))) {
-    mtype <- downcase(fit$env$est)
+    mtype <- fit$env$est
     software <- "nlmixr"
     if (mtype == "nlme"){
         wres <- "WRES"
