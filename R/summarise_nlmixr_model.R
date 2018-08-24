@@ -207,7 +207,7 @@ sum_nlmixr_nind <- function(model, software, obj) {
     if ("nlmixr_nlme" %in% class(obj)) {
       nind <- dim(obj$fitted)[1]
     }
-    if (("nlmixr.ui.saem" %in% class(obj)) | ("nlmixr.ui.nlme" %in% class(obj))) {
+    if (any("nlmixrFitData" == class(obj))) {
       nind <- length(unique(obj$ID))
     }
     dplyr::tibble(problem = 1, subprob = 0, label = 'nind', value = as.character(nind))
@@ -239,11 +239,8 @@ sum_nlmixr_subroutine <- function(model, software) {
 sum_nlmixr_runtime <- function(model, software, obj, rounding) {
   if (software == 'nlmixr') {
     rt <- 'na'
-    if ("nlmixr.ui.saem" %in% class(obj)) {
-      rt <- obj$time$saem
-    }
-    if ("nlmixr.ui.nlme" %in% class(obj)) {
-      rt <- obj$time$nlme
+    if (any("nlmixrFitData" == class(obj))) {
+        rt <- sum(as.matrix(obj$time[, names(obj$time) != "covariance"]))
     }
     if (rt!='na') {
       dplyr::tibble(problem = 1, subprob = 0, label = 'runtime', value = as.character(round(rt, rounding)))
@@ -333,10 +330,8 @@ sum_nlmixr_method <- function(model, software, obj) {
   if (software == 'nlmixr') {
     if ("nlmixr_nlme" %in% class(obj)) {
       dplyr::tibble(problem = 1, subprob = 0, label = 'method', value = 'nlme')
-    } else if (methods::is(obj, "nlmixr.ui.saem")){
-        dplyr::tibble(problem = 1, subprob = 0, label = 'method', value = 'saem')
-    } else if (methods::is(obj, "focei.fit")){
-        dplyr::tibble(problem = 1, subprob = 0, label = 'method', value = 'focei')
+    } else if (methods::is(obj, "nlmixrFitData")){
+        dplyr::tibble(problem = 1, subprob = 0, label = 'method', value = obj$est)
     }
   }
 }
@@ -350,7 +345,7 @@ sum_nlmixr_shk <- function(model, software, type, obj, rounding) {
     } else {
       shk <- 'na'
       lab <- paste(type, 'shk', sep='')
-      if (("nlmixr.ui.saem" %in% class(obj)) | ("nlmixr.ui.nlme" %in% class(obj))) {
+      if (any("nlmixrFitData" == class(obj))) {
         if(type=="eps") {
           shk <- paste(round((1 - stats::sd(obj$IWRES))*100, digits = rounding), "[1]", sep=" ")
         }

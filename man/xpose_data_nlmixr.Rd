@@ -4,28 +4,37 @@
 \alias{xpose_data_nlmixr}
 \title{Import nlmixr output into R}
 \usage{
-xpose_data_nlmixr(obj = NULL, pred = "CPRED", wres = "CWRES",
+xpose_data_nlmixr(obj = NULL, pred = NULL, wres = NULL,
   gg_theme = theme_readable(), xp_theme = theme_xp_default(), quiet,
   skip = NULL, ...)
 }
 \arguments{
 \item{obj}{nlmixr fit object to be evaluated.}
 
-\item{pred}{Name of the population prediction variable to use for plotting. Default is \code{"CPRED"}.}
+\item{pred}{Name of the population prediction variable to use for
+plotting. If unspecified, it will choose either "NPDE",
+"CWRES", and "RES" (in that order) if the column exists in the
+data.}
 
-\item{wres}{Name of the weighted residual variable to use for plotting. Default is \code{"CWRES"}.}
+\item{wres}{Name of the weighted residual variable to use for
+plotting. If unspecified, it will choose either "NPDE",
+"CWRES", and "RES" (in that order) if the column exists in the
+data.}
 
 \item{gg_theme}{A ggplot2 theme object.}
 
-\item{xp_theme}{An xpose theme or vector of modifications to the xpose theme
-(eg. \code{c(point_color = 'red', line_linetype = 'dashed')}).}
+\item{xp_theme}{An xpose theme or vector of modifications to the
+xpose theme (eg. \code{c(point_color = 'red', line_linetype =
+'dashed')}).}
 
-\item{quiet}{Logical, if \code{FALSE} messages are printed to the console.}
+\item{quiet}{Logical, if \code{FALSE} messages are printed to the
+console.}
 
-\item{skip}{Character vector be used to skip the import/generation of: 'data', 'files', 'summary' or any
-combination of the three.}
+\item{skip}{Character vector be used to skip the import/generation
+of: 'data', 'files', 'summary' or any combination of the three.}
 
-\item{...}{Additional arguments to be passed to the \code{\link[readr]{read_delim}} functions.}
+\item{...}{Additional arguments to be passed to the
+\code{\link[readr]{read_delim}} functions.}
 }
 \description{
 Convert 'nlmixr' model output into an 'xpose' database
