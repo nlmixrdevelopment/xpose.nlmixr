@@ -3,15 +3,24 @@
 #' @description Convert 'nlmixr' model output into an 'xpose' database
 #'
 #' @param obj nlmixr fit object to be evaluated.
-#' @param pred Name of the population prediction variable to use for plotting. Default is \code{"CPRED"}.
-#' @param wres Name of the weighted residual variable to use for plotting. Default is \code{"CWRES"}.
+#' @param pred Name of the population prediction variable to use for
+#'     plotting. If unspecified, it will choose either "NPDE",
+#'     "CWRES", and "RES" (in that order) if the column exists in the
+#'     data.
+#' @param wres Name of the weighted residual variable to use for
+#'     plotting. If unspecified, it will choose either "NPDE",
+#'     "CWRES", and "RES" (in that order) if the column exists in the
+#'     data.
 #' @param gg_theme A ggplot2 theme object.
-#' @param xp_theme An xpose theme or vector of modifications to the xpose theme
-#' (eg. \code{c(point_color = 'red', line_linetype = 'dashed')}).
-#' @param quiet Logical, if \code{FALSE} messages are printed to the console.
-#' @param skip Character vector be used to skip the import/generation of: 'data', 'files', 'summary' or any
-#' combination of the three.
-#' @param ... Additional arguments to be passed to the \code{\link[readr]{read_delim}} functions.
+#' @param xp_theme An xpose theme or vector of modifications to the
+#'     xpose theme (eg. \code{c(point_color = 'red', line_linetype =
+#'     'dashed')}).
+#' @param quiet Logical, if \code{FALSE} messages are printed to the
+#'     console.
+#' @param skip Character vector be used to skip the import/generation
+#'     of: 'data', 'files', 'summary' or any combination of the three.
+#' @param ... Additional arguments to be passed to the
+#'     \code{\link[readr]{read_delim}} functions.
 #'
 #' @import xpose
 #' @importFrom dplyr group_by mutate tibble case_when
@@ -28,8 +37,8 @@
 #' @export
 
 xpose_data_nlmixr <- function(obj         = NULL,
-                              pred        = "CPRED",
-                              wres        = "CWRES",
+                              pred        = NULL, #"CPRED",
+                              wres        = NULL, #"CWRES",
                               gg_theme    = theme_readable(),
                               xp_theme    = theme_xp_default(),
                               quiet,
@@ -44,9 +53,9 @@ xpose_data_nlmixr <- function(obj         = NULL,
   PRED = NULL
   msg = NULL
 
-  get_wres <- function(res, dv, pred) {
-    suppressWarnings(res / (sqrt(stats::cov(dv, pred))))
-  }
+  ## get_wres <- function(res, dv, pred) {
+  ##   suppressWarnings(res / (sqrt(stats::cov(dv, pred))))
+  ## }
 
   if (is.null(obj)) {
     stop('Argument `obj` required.', call. = FALSE)
@@ -59,12 +68,29 @@ xpose_data_nlmixr <- function(obj         = NULL,
 
   if (any("nlmixrFitData" == class(obj))) {
       mtype <- obj$env$est
-    software <- "nlmixr"
-    if (mtype == "nlme"){
-        wres <- "WRES"
-        pred <- "PRED"
-    }
-    objok <- TRUE
+      software <- "nlmixr"
+      if (is.null(wres)){
+          if (any(names(obj) == "NPDE")) {
+              wres <- "NPDE"
+          } else  if (any(names(obj) == "CWRES")){
+              wres <- "CWRES"
+          } else if (any(names(obj) == "RES")) {
+              wres <- "RES"
+              warning(sprintf("Using RES; Consider adding NPDE (%s%s) or CWRES (%s%s) to fit",
+                      crayon::blue("nlmixr::"), crayon::yellow("addNpde"),
+                      crayon::blue("nlmixr::"), crayon::yellow("addCwres")))
+          }
+      }
+      if (is.null(pred)){
+          if (any(names(obj) == "EPRED")){
+              pred <- "EPRED"
+          } else if (any(names(obj) == "CPRED")){
+              pred <- "CPRED"
+          } else if (any(names(obj) == "PRED")){
+              pred <- "PRED"
+          }
+      }
+      objok <- TRUE
   } else if (any("nlmixr_nlme" == class(obj))) {
     mtype <- obj$env$est
     software <- "nlmixr"
