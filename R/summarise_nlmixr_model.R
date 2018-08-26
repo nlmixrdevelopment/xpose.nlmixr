@@ -18,8 +18,8 @@
 #' }
 
 summarise_nlmixr_model <- function(obj, model, software, rounding, runname) {
-  sum <- dplyr::bind_rows(
-    sum_nlmixr_software(software),                    # Software name
+    sum <- dplyr::bind_rows(
+                      sum_nlmixr_software(software),                    # Software name
     sum_nlmixr_version(software),                     # Software version
     sum_nlmixr_file(runname, software),               # Model file
     sum_nlmixr_run(obj, runname, software),           # Model run
@@ -31,10 +31,7 @@ summarise_nlmixr_model <- function(obj, model, software, rounding, runname) {
     sum_nlmixr_label(model, software),                # Model label
     sum_nlmixr_description(model, software),          # Model description
     sum_nlmixr_input_data(obj, model, software),           # Model input data used
-    sum_nlmixr_nobs(model, software, obj),            # Number of observations
-    sum_nlmixr_nind(model, software, obj),            # Number of individuals
-    sum_nlmixr_nsim(model, software),                 # Number of simulations
-    sum_nlmixr_simseed(obj, model, software),              # Simulation seed
+    sum_nlmixr_nobs(model, software, obj),               # Simulation seed
     sum_nlmixr_subroutine(model, software),           # Des solver
     sum_nlmixr_runtime(model, software, obj, rounding),   # Estimation runtime
     sum_nlmixr_covtime(model, software, obj, rounding),   # Covariance matrix runtime
@@ -50,6 +47,7 @@ summarise_nlmixr_model <- function(obj, model, software, rounding, runname) {
     sum_nlmixr_shk(model, software, 'eps', obj, rounding), # Epsilon shrinkage
     sum_nlmixr_shk(model, software, 'eta', obj, rounding)  # Eta shrinkage
   )
+
 
   . = NULL
 
@@ -328,11 +326,7 @@ sum_nlmixr_ofv <- function(model, software, obj, rounding) {
 # Estimation method or sim
 sum_nlmixr_method <- function(model, software, obj) {
   if (software == 'nlmixr') {
-    if ("nlmixr_nlme" %in% class(obj)) {
-      dplyr::tibble(problem = 1, subprob = 0, label = 'method', value = 'nlme')
-    } else if (methods::is(obj, "nlmixrFitData")){
-        dplyr::tibble(problem = 1, subprob = 0, label = 'method', value = obj$est)
-    }
+      dplyr::tibble(problem = 1, subprob = 0, label = 'method', value = obj$method)
   }
 }
 
