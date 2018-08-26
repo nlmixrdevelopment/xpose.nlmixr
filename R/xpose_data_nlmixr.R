@@ -67,7 +67,7 @@ xpose_data_nlmixr <- function(obj         = NULL,
   objok <- FALSE
 
   if (any("nlmixrFitData" == class(obj))) {
-      mtype <- obj$env$est
+      mtype <- obj$method
       software <- "nlmixr"
       if (is.null(wres)){
           if (any(names(obj) == "NPDE")) {
@@ -92,7 +92,7 @@ xpose_data_nlmixr <- function(obj         = NULL,
       }
       objok <- TRUE
   } else if (any("nlmixr_nlme" == class(obj))) {
-    mtype <- obj$env$est
+    mtype <- obj$method
     software <- "nlmixr"
     if (mtype == "nlme"){
         wres <- "WRES"
@@ -103,7 +103,7 @@ xpose_data_nlmixr <- function(obj         = NULL,
 
 
 
-  #if ((objok == FALSE) | ("nlmixr_nlme" %in% class(obj))) {
+                                        #if ((objok == FALSE) | ("nlmixr_nlme" %in% class(obj))) {
   if ((objok == FALSE)) {
     stop('Model type currently not supported by xpose.', call. = FALSE)
   }
@@ -225,7 +225,7 @@ xpose_data_nlmixr <- function(obj         = NULL,
   # -Andy
 
   files <- NULL
-  if(mtype=="saem") {
+  if(mtype=="SAEM") {
     tracedat <- tibble::as.tibble(as.data.frame(obj$par.hist))
     names(tracedat)[grep("iter", names(tracedat))] <-
       "ITERATION"
