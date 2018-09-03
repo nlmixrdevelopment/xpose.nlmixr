@@ -28,3 +28,6 @@ nlmixr_vpc_theme <- vpc::new_vpc_theme(list(obs_color = "#1F4E79",
                                             sim_median_linetype = "dashed",
                                             sim_median_size = 1,
                                             bin_separators_color = "#000000" ) )
+
+##'@export
+vpc::vpc

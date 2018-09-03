@@ -70,10 +70,10 @@ xpose_data_nlmixr <- function(obj         = NULL,
       mtype <- obj$method
       software <- "nlmixr"
       if (is.null(wres)){
-          if (any(names(obj) == "NPDE")) {
-              wres <- "NPDE"
-          } else  if (any(names(obj) == "CWRES")){
+          if (any(names(obj) == "CWRES")) {
               wres <- "CWRES"
+          } else  if (any(names(obj) == "NPDE")){
+              wres <- "NPDE"
           } else if (any(names(obj) == "RES")) {
               wres <- "RES"
               warning(sprintf("Using RES; Consider adding NPDE (%s%s) or CWRES (%s%s) to fit",
