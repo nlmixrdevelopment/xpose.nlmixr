@@ -76,13 +76,26 @@ xpose_data_nlmixr <- function(obj         = NULL,
               wres <- "NPDE"
           } else if (any(names(obj) == "RES")) {
               wres <- "RES"
-              warning(sprintf("Using RES; Consider adding NPDE (%s%s) or CWRES (%s%s) to fit",
-                      crayon::blue("nlmixr::"), crayon::yellow("addNpde"),
-                      crayon::blue("nlmixr::"), crayon::yellow("addCwres")))
+              obj <- nlmixr::addCwres(obj)
+              if (any(names(obj) == "CWRES")){
+                  wres <- "CWRES"
+                  warning(sprintf("Added CWRES to fit (using %s%s)",
+                                  crayon::blue("nlmixr::"), crayon::yellow("addCwres")))
+              } else {
+                  warning(sprintf("Using RES; Consider adding NPDE (%s%s) to fit",
+                                  crayon::blue("nlmixr::"), crayon::yellow("addNpde")))
+              }
+
           }
       }
       if (is.null(pred)){
-          if (any(names(obj) == "EPRED")){
+          if (any(names(obj) == "EPRED") & wres == "NPDE"){
+              pred <- "EPRED"
+          } else if (any(names(obj) == "CPRED") & wres == "CWRES"){
+              pred <- "CPRED"
+          } else if (any(names(obj) == "PRED") & wres == "RES"){
+              pred <- "PRED"
+          } else if (any(names(obj) == "EPRED")){
               pred <- "EPRED"
           } else if (any(names(obj) == "CPRED")){
               pred <- "CPRED"
@@ -155,7 +168,8 @@ xpose_data_nlmixr <- function(obj         = NULL,
   if (!is.null(obj$data.name) & any("nlmixrFitData" == class(obj))) {
       ## getData works for nlme/saem;  It also works if you remove the data or use nlmixr's read data set
       full.dat <- suppressWarnings({nlmixr::nlmixrData(nlme::getData(obj))})
-      full.dat <- full.dat[full.dat$EVID == 0, !(names(full.dat) %in% names(data_a))];
+      names(full.dat) <- toupper(names(full.dat))
+      full.dat <- full.dat[full.dat$EVID == 0 | full.dat$EVID == 2, !(names(full.dat) %in% names(data_a))];
       data_a <- data.frame(data_a, full.dat);
   }
 
@@ -250,4 +264,5 @@ xpose_data_nlmixr <- function(obj         = NULL,
                       manual_import = NULL), software = 'nlmixr') %>%
     structure(class = c('xpose_data', 'uneval'))
 }
+
 
