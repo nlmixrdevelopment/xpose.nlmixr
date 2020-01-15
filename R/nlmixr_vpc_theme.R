@@ -30,4 +30,4 @@ nlmixr_vpc_theme <- vpc::new_vpc_theme(list(obs_color = "#1F4E79",
                                             bin_separators_color = "#000000" ) )
 
 ##'@export
-vpc::vpc
+nlmixr::vpc

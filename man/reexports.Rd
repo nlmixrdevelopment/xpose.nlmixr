@@ -11,6 +11,6 @@ These objects are imported from other packages. Follow the links
 below to see their documentation.
 
 \describe{
-  \item{vpc}{\code{\link[vpc]{vpc}}}
+  \item{nlmixr}{\code{\link[nlmixr]{vpc}}}
 }}
 

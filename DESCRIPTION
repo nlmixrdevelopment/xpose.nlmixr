@@ -49,4 +49,4 @@ Imports:
   vpc (>= 1.0.2),
   nlme,
   crayon
-RoxygenNote: 6.1.0
+RoxygenNote: 7.0.2

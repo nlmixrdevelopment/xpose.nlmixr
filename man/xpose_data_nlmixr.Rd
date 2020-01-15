@@ -4,9 +4,16 @@
 \alias{xpose_data_nlmixr}
 \title{Import nlmixr output into R}
 \usage{
-xpose_data_nlmixr(obj = NULL, pred = NULL, wres = NULL,
-  gg_theme = theme_readable(), xp_theme = theme_xp_default(), quiet,
-  skip = NULL, ...)
+xpose_data_nlmixr(
+  obj = NULL,
+  pred = NULL,
+  wres = NULL,
+  gg_theme = theme_readable(),
+  xp_theme = theme_xp_default(),
+  quiet,
+  skip = NULL,
+  ...
+)
 }
 \arguments{
 \item{obj}{nlmixr fit object to be evaluated.}
