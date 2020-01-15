@@ -57,9 +57,9 @@ summarise_nlmixr_model <- function(obj, model, software, rounding, runname) {
 
   if (nrow(tmp) == 0) return(sum)
 
+
   tmp %>%
-    tidyr::complete_(cols = c(quote(problem), quote(label)),
-                     fill = list(subprob = 0, value = 'na')) %>%
+    tidyr::complete(problem, label, fill = list(subprob = 0, value = 'na')) %>%
     dplyr::bind_rows(dplyr::filter(sum, sum$problem == 0)) %>%
     dplyr::arrange_(.dots = c('problem', 'label', 'subprob')) %>%
     dplyr::mutate(descr = dplyr::case_when(
