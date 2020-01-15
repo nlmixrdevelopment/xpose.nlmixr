@@ -169,7 +169,13 @@ xpose_data_nlmixr <- function(obj         = NULL,
       ## getData works for nlme/saem;  It also works if you remove the data or use nlmixr's read data set
       full.dat <- suppressWarnings({nlmixr::nlmixrData(nlme::getData(obj))})
       names(full.dat) <- toupper(names(full.dat))
-      full.dat <- full.dat[full.dat$EVID == 0 | full.dat$EVID == 2, !(names(full.dat) %in% names(data_a))];
+      if (any(names(full.dat) == "EVID")){
+          full.dat <- full.dat[full.dat$EVID == 0 | full.dat$EVID == 2, !(names(full.dat) %in% names(data_a))];
+      } else if (any(names(full.dat) == "MDV")){
+          full.dat <- full.dat[full.dat$MDV == 0, !(names(full.dat) %in% names(data_a))];
+      } else {
+          full.dat <- full.dat[, !(names(full.dat) %in% names(data_a))]
+      }
       data_a <- data.frame(data_a, full.dat);
   }
 
