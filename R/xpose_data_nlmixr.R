@@ -53,9 +53,9 @@ xpose_data_nlmixr <- function(obj         = NULL,
   PRED = NULL
   msg = NULL
 
-  ## get_wres <- function(res, dv, pred) {
-  ##   suppressWarnings(res / (sqrt(stats::cov(dv, pred))))
-  ## }
+  get_wres <- function(res, dv, pred) {
+    suppressWarnings(res / (sqrt(stats::cov(dv, pred))))
+  }
 
   if (is.null(obj)) {
     stop('Argument `obj` required.', call. = FALSE)
@@ -154,7 +154,7 @@ xpose_data_nlmixr <- function(obj         = NULL,
     data_a <- data %>%
       dplyr::group_by(ID)
 
-    data_a <- tibble::as.tibble(data_a)
+    data_a <- tibble::as_tibble(data_a)
   }
 
   if(!(wres %in% names(data_a))) {
@@ -169,7 +169,9 @@ xpose_data_nlmixr <- function(obj         = NULL,
       ## getData works for nlme/saem;  It also works if you remove the data or use nlmixr's read data set
       full.dat <- suppressWarnings({nlmixr::nlmixrData(nlme::getData(obj))})
       names(full.dat) <- toupper(names(full.dat))
-      full.dat <- full.dat[full.dat$EVID == 0 | full.dat$EVID == 2, !(names(full.dat) %in% names(data_a))];
+      if("EVID" %in% names(full.dat)) {  ## sometimes EVID not present
+        full.dat <- full.dat[full.dat$EVID == 0 | full.dat$EVID == 2, !(names(full.dat) %in% names(data_a))];
+      }
       data_a <- data.frame(data_a, full.dat);
   }
 
