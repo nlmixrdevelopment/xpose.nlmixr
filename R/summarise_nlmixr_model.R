@@ -50,6 +50,7 @@ summarise_nlmixr_model <- function(obj, model, software, rounding, runname) {
 
 
   . = NULL
+  problem <- label <- NULL
 
   # Complete missing cases for consistency
   tmp <- sum %>%
