@@ -1,6 +1,6 @@
 #' Import nlmixr output into R
 #'
-#' @description Convert 'nlmixr' model output into an 'xpose' database
+#' @description Convert 'nlmixr' model output into an 'xpose' database.
 #'
 #' @param obj nlmixr fit object to be evaluated.
 #' @param pred Name of the population prediction variable to use for
@@ -22,7 +22,9 @@
 #' @param ... Additional arguments to be passed to the
 #'     \code{\link[readr]{read_delim}} functions.
 #'
-#' @import xpose
+#' @return An \code{\link[xpose]{xpose_data}} object suitable for use in 'xpose'.
+#'
+#' @import nlmixr
 #' @importFrom dplyr group_by mutate tibble case_when
 #' @importFrom tibble as.tibble
 #' @importFrom stringr str_detect
@@ -30,9 +32,7 @@
 #' @importFrom stats coef rnorm
 #'
 #' @examples
-#' \dontrun{
-#' xpdb <- xpose_data_nlmixr(obj = fit1)
-#' }
+#' xpdb <- xpose_data_nlmixr(obj = theo_sd_fit)
 #'
 #' @export
 

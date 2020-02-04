@@ -1,6 +1,8 @@
 #' Default VPC theme for 'xpose.nlmixr'
 #'
-#' @description Default VPC theme for 'xpose.nlmixr'
+#' @description Default VPC theme for 'xpose.nlmixr'.
+#'
+#' @return A list with 'vpc' theme specifiers.
 #'
 #' @importFrom vpc new_vpc_theme
 #' @importFrom xpose theme_xp_default

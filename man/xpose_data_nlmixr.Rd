@@ -43,12 +43,13 @@ of: 'data', 'files', 'summary' or any combination of the three.}
 \item{...}{Additional arguments to be passed to the
 \code{\link[readr]{read_delim}} functions.}
 }
+\value{
+An \code{\link[xpose]{xpose_data}} object suitable for use in 'xpose'.
+}
 \description{
-Convert 'nlmixr' model output into an 'xpose' database
+Convert 'nlmixr' model output into an 'xpose' database.
 }
 \examples{
-\dontrun{
-xpdb <- xpose_data_nlmixr(obj = fit1)
-}
+xpdb <- xpose_data_nlmixr(obj = theo_sd_fit)
 
 }

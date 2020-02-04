@@ -17,11 +17,9 @@ summarise_nlmixr_model(obj, model, software, rounding, runname)
 
 \item{runname}{Name of the model object being converted}
 }
+\value{
+A summary data object used by \link{xpose_data_nlmixr}.
+}
 \description{
 Convert 'nlmixr' model output into an 'xpose' database
-}
-\examples{
-\dontrun{
-xpdb <- xpose_data_nlmixr(obj = fit1)
-}
 }

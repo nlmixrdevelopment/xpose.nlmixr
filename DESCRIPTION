@@ -30,7 +30,7 @@ Authors@R: c(person('Justin', 'Wilkins', email = 'justin.wilkins@occams.com',
       person('Occams', role = 'ctb'),
       person('Novartis', role = 'ctb'))
 Maintainer: Justin Wilkins <justin.wilkins@occams.com>
-Description: Extension to 'xpose' to support 'nlmixr'.
+Description: Extension to 'xpose' to support 'nlmixr'. Provides functions to import 'nlmixr' fit data into an 'xpose' data object, allowing the use of 'xpose' for 'nlmixr' model diagnostics.  
 License: GPL (>=2)
 Encoding: UTF-8
 LazyData: true

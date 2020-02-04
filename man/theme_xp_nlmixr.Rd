@@ -6,6 +6,9 @@
 \usage{
 theme_xp_nlmixr()
 }
+\value{
+A list with 'xpose' theme specifiers.
+}
 \description{
 Default 'nlmixr' theme for 'xpose'.
 }

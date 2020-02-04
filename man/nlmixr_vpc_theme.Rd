@@ -8,7 +8,10 @@
 \usage{
 nlmixr_vpc_theme
 }
+\value{
+A list with 'vpc' theme specifiers.
+}
 \description{
-Default VPC theme for 'xpose.nlmixr'
+Default VPC theme for 'xpose.nlmixr'.
 }
 \keyword{datasets}

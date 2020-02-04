@@ -1,7 +1,9 @@
 #' Default 'nlmixr' theme for 'xpose'
 #'
 #' @description Default 'nlmixr' theme for 'xpose'.
-
+#'
+#' @return A list with 'xpose' theme specifiers.
+#'
 #' @importFrom ggplot2 labeller label_both
 #' @importFrom xpose theme_xp_default
 #'

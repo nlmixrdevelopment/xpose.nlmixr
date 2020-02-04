@@ -8,14 +8,12 @@
 #' @param rounding Number of figures to round estimates to
 #' @param runname Name of the model object being converted
 #'
+#' @return A summary data object used by \link{xpose_data_nlmixr}.
+#'
 #' @importFrom magrittr %>%
 #' @importFrom dplyr bind_rows filter mutate arrange_ case_when select one_of tibble
 #' @importFrom tidyr complete_
-#'
-#' @examples
-#' \dontrun{
-#' xpdb <- xpose_data_nlmixr(obj = fit1)
-#' }
+
 
 summarise_nlmixr_model <- function(obj, model, software, rounding, runname) {
     sum <- dplyr::bind_rows(
