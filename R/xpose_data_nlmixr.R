@@ -26,7 +26,7 @@
 #'
 #' @import nlmixr
 #' @importFrom dplyr group_by mutate tibble case_when
-#' @importFrom tibble as.tibble
+#' @importFrom tibble as_tibble
 #' @importFrom stringr str_detect
 #' @importFrom xpose theme_readable theme_xp_default
 #' @importFrom stats coef rnorm
@@ -146,7 +146,7 @@ xpose_data_nlmixr <- function(obj         = NULL,
       dplyr::group_by(ID) %>%
       dplyr::mutate(WRES = get_wres(res = RES, dv = DV, pred=PRED))
 
-    data_a <- tibble::as.tibble(data_a)
+    data_a <- tibble::as_tibble(data_a)
   }
 
   if (any("nlmixrFitData" == class(obj))) {
@@ -154,7 +154,7 @@ xpose_data_nlmixr <- function(obj         = NULL,
     data_a <- data %>%
       dplyr::group_by(ID)
 
-    data_a <- tibble::as.tibble(data_a)
+    data_a <- tibble::as_tibble(data_a)
   }
 
   if(!(wres %in% names(data_a))) {
@@ -246,7 +246,7 @@ xpose_data_nlmixr <- function(obj         = NULL,
 
   files <- NULL
   if(mtype=="SAEM") {
-    tracedat <- tibble::as.tibble(as.data.frame(obj$par.hist))
+    tracedat <- tibble::as_tibble(as.data.frame(obj$par.hist))
     names(tracedat)[grep("iter", names(tracedat))] <-
       "ITERATION"
 

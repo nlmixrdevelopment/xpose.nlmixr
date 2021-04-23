@@ -11,8 +11,9 @@
 #' @return A summary data object used by \link{xpose_data_nlmixr}.
 #'
 #' @importFrom magrittr %>%
-#' @importFrom dplyr bind_rows filter mutate arrange_ case_when select one_of tibble
-#' @importFrom tidyr complete_
+#' @importFrom dplyr bind_rows filter mutate arrange_at case_when select one_of tibble
+#' @importFrom tidyr complete
+#' @importFrom rlang syms
 
 
 summarise_nlmixr_model <- function(obj, model, software, rounding, runname) {
@@ -58,9 +59,10 @@ summarise_nlmixr_model <- function(obj, model, software, rounding, runname) {
 
 
   tmp %>%
-    tidyr::complete(problem, label, fill = list(subprob = 0, value = 'na')) %>%
+    tidyr::complete(!!!rlang::syms(c('problem', 'label')),
+                    fill = list(subprob = 0, value = 'na')) %>%
     dplyr::bind_rows(dplyr::filter(sum, sum$problem == 0)) %>%
-    dplyr::arrange_(.dots = c('problem', 'label', 'subprob')) %>%
+    dplyr::arrange_at(.vars = c('problem', 'label', 'subprob')) %>%
     dplyr::mutate(descr = dplyr::case_when(
       .$label == 'software' ~ 'Software',
       .$label == 'version' ~ 'Software version',

@@ -4,7 +4,9 @@
 \name{nlmixr_vpc_theme}
 \alias{nlmixr_vpc_theme}
 \title{Default VPC theme for 'xpose.nlmixr'}
-\format{An object of class \code{vpc_theme} of length 23.}
+\format{
+An object of class \code{vpc_theme} of length 23.
+}
 \usage{
 nlmixr_vpc_theme
 }

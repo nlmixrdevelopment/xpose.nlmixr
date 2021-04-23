@@ -1,7 +1,7 @@
 Package: xpose.nlmixr
 Type: Package
 Title: Graphical Diagnostics for Pharmacometric Models: Extension to 'nlmixr'
-Version: 0.1.5
+Version: 0.2.0
 Authors@R: c(person('Justin', 'Wilkins', email = 'justin.wilkins@occams.com',
                   role = c('aut', 'cre', 'cph')),
           person('Matthew','Fidler',
@@ -38,15 +38,16 @@ Depends:
   R (>= 3.2),
   xpose (>= 0.4.2)
 Imports:
-  ggplot2 (>= 2.2.1),
-  nlmixr (>= 1.1.0-0),
-  dplyr (>= 0.7.4),
-  tibble (>= 1.3.4),
-  stringr (>= 1.2.0),
-  tidyr (>= 0.7.2),
-  magrittr (>= 1.5),
-  methods (>= 3.4.1),
-  vpc (>= 1.0.2),
-  nlme,
-  crayon
-RoxygenNote: 7.0.2
+    ggplot2 (>= 2.2.1),
+    nlmixr (>= 1.1.0-0),
+    dplyr (>= 0.7.4),
+    tibble (>= 2.0.0),
+    stringr (>= 1.2.0),
+    tidyr (>= 0.7.2),
+    magrittr (>= 1.5),
+    methods (>= 3.4.1),
+    vpc (>= 1.0.2),
+    nlme,
+    crayon,
+    rlang
+RoxygenNote: 7.1.1
