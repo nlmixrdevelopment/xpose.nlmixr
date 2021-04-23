@@ -1,7 +1,6 @@
 # xpose.nlmixr
 
 <!-- badges: start -->
-[![R build status](https://github.com/nlmixrdevelopment/xpose.nlmixr/workflows/R-CMD-check/badge.svg)](https://github.com/nlmixrdevelopment/xpose.nlmixr/actions)
 [![CRAN checks](https://cranchecks.info/badges/summary/xpose.nlmixr)](https://cran.r-project.org/web/checks/check_results_xpose.nlmixr.html)
 [![CRAN total downloads](https://cranlogs.r-pkg.org/badges/grand-total/xpose.nlmixr)](https://cran.r-project.org/package=nlmixr)
 <!-- badges: end -->
