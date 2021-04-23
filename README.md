@@ -22,12 +22,4 @@ Alternatively, the development version can be installed from [GitHub](https://gi
 devtools::install_github("nlmixrdevelopment/xpose.nlmixr")
 ```
 
-## Example
-
-This is a basic example which shows you how to solve a common problem:
-
-``` r
-library(xpose.nlmixr)
-## basic example code
-```
 
