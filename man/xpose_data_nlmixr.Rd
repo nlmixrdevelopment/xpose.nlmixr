@@ -2,7 +2,7 @@
 % Please edit documentation in R/xpose_data_nlmixr.R
 \name{xpose_data_nlmixr}
 \alias{xpose_data_nlmixr}
-\title{Import nlmixr output into R}
+\title{Import nlmixr output into xpose}
 \usage{
 xpose_data_nlmixr(
   obj = NULL,

@@ -1,4 +1,4 @@
-#' Import nlmixr output into R
+#' Import nlmixr output into xpose
 #'
 #' @description Convert 'nlmixr' model output into an 'xpose' database.
 #'
@@ -61,6 +61,10 @@ xpose_data_nlmixr <- function(obj         = NULL,
     stop('Argument `obj` required.', call. = FALSE)
   }
 
+
+  if (any("nlmixr2FitData" == class(obj))) {
+    stop('This package works for legacy nlmixr only. For nlmixr2, please use xpose.nlmixr2.', call. = FALSE)
+  }
 
   if (missing(quiet)) quiet <- !interactive()
 
