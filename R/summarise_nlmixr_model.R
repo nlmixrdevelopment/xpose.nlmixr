@@ -239,7 +239,7 @@ sum_nlmixr_runtime <- function(model, software, obj, rounding) {
   if (software == 'nlmixr') {
     rt <- 'na'
     if (any("nlmixrFitData" == class(obj))) {
-        rt <- sum(as.matrix(obj$time[, names(obj$time) != "covariance"]))
+        rt <- sum(as.matrix(obj$time[, names(obj$time) != "covariance"]), na.rm = TRUE)
     }
     if (rt!='na') {
       dplyr::tibble(problem = 1, subprob = 0, label = 'runtime', value = as.character(round(rt, rounding)))
